@@ -7,15 +7,16 @@ RUN apt-get update && apt-get install -y \
     libwebp-dev \
     libzip-dev \
     libpq-dev \
+    libicu-dev \
     zip \
     unzip \
     git \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# 2. Configure and install PHP extensions (termasuk GD dengan dukungan WebP & JPEG)
+# 2. Configure and install PHP extensions (termasuk GD dengan dukungan WebP & JPEG, serta intl)
 RUN docker-php-ext-configure gd --with-jpeg --with-webp \
-    && docker-php-ext-install gd zip pdo_pgsql
+    && docker-php-ext-install gd zip pdo_pgsql intl
 
 # 3. Enable Apache mod_rewrite untuk routing Laravel
 RUN a2enmod rewrite
