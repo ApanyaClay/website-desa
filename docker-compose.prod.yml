@@ -14,7 +14,10 @@ services:
       - DB_PORT=5432
       - DB_DATABASE=website_desa
       - DB_USERNAME=postgres
-      - DB_PASSWORD=password # Samakan dengan password di atas
+      - DB_PASSWORD=password # Samakan dengan password di bawah
+    volumes:
+      - ./.env:/var/www/html/.env
+      - desa_storage:/var/www/html/storage/app
     depends_on:
       - db
 
@@ -31,3 +34,4 @@ services:
 
 volumes:
   postgres_data_prod:
+  desa_storage:
