@@ -38,5 +38,8 @@ COPY --chown=www-data:www-data . .
 # 8. Set permission folder storage & bootstrap cache agar Laravel bisa menulis log/cache
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-# 9. Expose port 80 untuk Apache
+# 9. Jalankan composer install untuk mengunduh dependensi produksi langsung saat build
+RUN composer install --no-interaction --optimize-autoloader --no-dev
+
+# 10. Expose port 80 untuk Apache
 EXPOSE 80
