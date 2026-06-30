@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: desa_app_prod
+    restart: always
+    ports:
+      - "127.0.0.1:8000:80" # Diikat ke localhost agar hanya bisa diakses via Nginx Reverse Proxy (aman)
+    environment:
+      - APP_ENV=production
+      - APP_DEBUG=false
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_DATABASE=website_desa
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=secretpassword_ubah_ini # Pastikan diganti dengan password yang sangat kuat
+    depends_on:
+      - db
+
+  db:
+    image: postgres:16-alpine
+    container_name: desa_db_prod
+    restart: always
+    environment:
+      - POSTGRES_DB=website_desa
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=secretpassword_ubah_ini # Samakan dengan password di atas
+    volumes:
+      - postgres_data_prod:/var/lib/postgresql/data
+
+volumes:
+  postgres_data_prod:
